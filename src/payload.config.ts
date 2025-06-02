@@ -19,6 +19,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    buildPath: path.resolve(dirname, '../build'),
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
@@ -26,6 +27,10 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  // Configuración optimizada para producción
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  cors: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
+  csrf: process.env.NODE_ENV === 'production' ? [process.env.NEXT_PUBLIC_SERVER_URL || ''] : [],
   db: sqliteAdapter({
     client: {
       url: process.env.DATABASE_URI || '',
