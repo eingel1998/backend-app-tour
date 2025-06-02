@@ -1,5 +1,79 @@
-# 🔐 VARIABLES DE ENTORNO PARA RENDER
-# Copia estas variables una por una en el dashboard de Render
+# 🚀 VARIABLES DE ENTORNO PARA RENDER (PRODUCCIÓN)
+# 📋 Copia estas EXACTAMENTE en el dashboard de Render: Environment Variables
+
+# ===== 🔑 VARIABLES BÁSICAS =====
+PAYLOAD_SECRET=72ea41c8ce968039c5f483a8
+DATABASE_URI=file:./production-database.db
+
+# ===== 🌐 CONFIGURACIÓN DE SERVIDOR =====
+NODE_ENV=production
+NEXT_PUBLIC_SERVER_URL=https://backend-app-tour.onrender.com
+PORT=10000
+
+# ===== 🔧 CONFIGURACIÓN DE APLICACIÓN =====
+NODE_OPTIONS=--no-deprecation
+CORS_ORIGINS=https://backend-app-tour.onrender.com
+
+# ===== 📊 PARA MONITOREO Y LOGS =====
+LOG_LEVEL=info
+
+# ===== 🔒 SEGURIDAD =====
+RATE_LIMIT_MAX=100
+RATE_LIMIT_WINDOW=900000
+
+# ===== 🤖 INTEGRACIONES DE IA (OPCIONAL) =====
+# Descomenta según necesites:
+# OPENAI_API_KEY=sk-your-openai-key-here
+# ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+
+# ===== 📧 CONFIGURACIÓN SMTP (OPCIONAL) =====
+# Descomenta y configura según necesites:
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=587
+# SMTP_USER=tu-email@gmail.com
+# SMTP_PASS=tu-app-password
+
+# ===== 🎯 CONFIGURACIÓN ESPECÍFICA PAYLOAD (OPCIONAL) =====
+# PAYLOAD_ADMIN_EMAIL=admin@tuapp.com
+# PAYLOAD_ADMIN_PASSWORD=tu-password-seguro
+
+---
+
+## 📋 INSTRUCCIONES PARA COPIAR A RENDER
+
+### 🔥 **FORMATO COPIA/PEGA DIRECTO**
+
+1. **Ve a Render Dashboard > Tu Servicio > Environment**
+2. **Copia cada línea (sin el #) directamente:**
+
+```
+PAYLOAD_SECRET=72ea41c8ce968039c5f483a8
+DATABASE_URI=file:./production-database.db
+NODE_ENV=production
+NEXT_PUBLIC_SERVER_URL=https://backend-app-tour.onrender.com
+PORT=10000
+NODE_OPTIONS=--no-deprecation
+CORS_ORIGINS=https://backend-app-tour.onrender.com
+LOG_LEVEL=info
+RATE_LIMIT_MAX=100
+RATE_LIMIT_WINDOW=900000
+```
+
+### 🎯 **VARIABLES OPCIONALES** (Solo si las necesitas)
+```
+OPENAI_API_KEY=sk-your-openai-key-here
+ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tu-email@gmail.com
+SMTP_PASS=tu-app-password
+PAYLOAD_ADMIN_EMAIL=admin@tuapp.com
+PAYLOAD_ADMIN_PASSWORD=tu-password-seguro
+```
+
+### ⚠️ **IMPORTANTE**
+- Cambiar `backend-app-tour` por el nombre real de tu app en Render
+- Si necesitas las opcionales, descomenta y configura con valores reales
 
 ## 🚨 OBLIGATORIAS (Copiar exactamente como está)
 

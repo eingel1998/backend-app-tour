@@ -19,7 +19,6 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    buildPath: path.resolve(dirname, '../build'),
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
