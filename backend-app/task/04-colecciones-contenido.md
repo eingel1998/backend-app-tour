@@ -418,3 +418,231 @@ Al finalizar esta tarea, deberías tener:
 **Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
 
 **Siguiente tarea:** `05-colecciones-avanzadas.md`
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-04/`**
+
+##### **1. `places-collection.test.ts` - Tests de Colección Places**
+```typescript
+describe('Task 04 - Places Collection', () => {
+  test('should have Places collection with complete structure', async () => {
+    // Verificar estructura básica de Places.ts
+    // Validar campos principales: name, slug, description, etc.
+    // Verificar relación con categories
+  });
+
+  test('should handle location data correctly', async () => {
+    // Test de grupo location con coordenadas
+    // Verificar validación de latitude/longitude
+    // Test de campos de acceso y transporte
+  });
+
+  test('should manage multimedia relationships properly', async () => {
+    // Test de relación con Media (images, videos)
+    // Verificar campo virtualTour para URLs 360°
+    // Validar requerimientos de imágenes
+  });
+
+  test('should handle pricing configuration', async () => {
+    // Test de grupo pricing (isFree, precios)
+    // Verificar validación de moneda
+    // Test de descripciones de precios
+  });
+
+  test('should manage schedule and accessibility data', async () => {
+    // Test de array schedule para horarios
+    // Verificar configuración de días y horarios
+    // Test de grupo accessibility
+  });
+
+  test('should validate Riohacha tourism places creation', async () => {
+    // Test de creación de lugares específicos de Riohacha
+    // Verificar datos geográficos correctos
+    // Validar categorización apropiada
+  });
+});
+```
+
+##### **2. `reviews-collection.test.ts` - Tests de Colección Reviews**
+```typescript
+describe('Reviews Collection Tests', () => {
+  test('should have Reviews collection with rating system', async () => {
+    // Verificar estructura de Reviews.ts
+    // Test de sistema de calificación (1-5 estrellas)
+    // Validar campos de reseña: title, content, rating
+  });
+
+  test('should handle user and place relationships', async () => {
+    // Test de relación user -> reviews
+    // Test de relación place -> reviews
+    // Verificar integridad referencial
+  });
+
+  test('should manage review moderation', async () => {
+    // Test de estados de moderación
+    // Verificar workflow de aprobación
+    // Test de filtrado de contenido inapropiado
+  });
+
+  test('should calculate average ratings correctly', async () => {
+    // Test de cálculo de rating promedio por lugar
+    // Verificar actualización automática de promedios
+    // Test de distribución de calificaciones
+  });
+
+  test('should handle review responses and interactions', async () => {
+    // Test de respuestas de negocios
+    // Verificar sistema de likes/dislikes
+    // Test de reportes de reseñas
+  });
+
+  test('should validate review authenticity', async () => {
+    // Test de validación de usuario autenticado
+    // Verificar una reseña por usuario por lugar
+    // Test de detección de reviews spam
+  });
+});
+```
+
+##### **3. `events-collection.test.ts` - Tests de Colección Events**
+```typescript
+describe('Events Collection Tests', () => {
+  test('should have Events collection with date management', async () => {
+    // Verificar estructura de Events.ts
+    // Test de campos de fecha: startDate, endDate
+    // Validar manejo de eventos recurrentes
+  });
+
+  test('should handle event location and venue data', async () => {
+    // Test de relación con Places (venue)
+    // Verificar datos de ubicación específica
+    // Test de capacidad y aforo
+  });
+
+  test('should manage event categories and types', async () => {
+    // Test de categorización de eventos
+    // Verificar tipos específicos de Riohacha (culturales, gastronómicos)
+    // Test de tags y etiquetado
+  });
+
+  test('should handle registration and ticketing', async () => {
+    // Test de sistema de registro
+    // Verificar manejo de tickets y precios
+    // Test de límites de capacidad
+  });
+
+  test('should manage event organizer data', async () => {
+    // Test de relación con Users (organizer)
+    // Verificar permisos de organización
+    // Test de contacto y información del organizador
+  });
+
+  test('should handle event status and lifecycle', async () => {
+    // Test de estados: draft, published, ongoing, finished, cancelled
+    // Verificar transiciones de estado automáticas
+    // Test de notificaciones por cambios de estado
+  });
+});
+```
+
+##### **4. `content-integration.test.ts` - Tests de Integración de Contenido**
+```typescript
+describe('Content Collections Integration Tests', () => {
+  test('should integrate all content collections properly', async () => {
+    // Test de integración Places + Reviews + Events
+    // Verificar relaciones cruzadas
+    // Test de queries complejas entre colecciones
+  });
+
+  test('should handle search and filtering across collections', async () => {
+    // Test de búsqueda global en contenido
+    // Verificar filtros por categoría, ubicación, fecha
+    // Test de búsqueda por texto en múltiples campos
+  });
+
+  test('should manage content moderation workflow', async () => {
+    // Test de workflow de moderación unificado
+    // Verificar permisos de publicación
+    // Test de contenido reportado
+  });
+
+  test('should handle content recommendations', async () => {
+    // Test de recomendaciones relacionadas
+    // Verificar algoritmo de contenido similar
+    // Test de recomendaciones basadas en ubicación
+  });
+
+  test('should support multilingual content', async () => {
+    // Test de contenido en español e inglés
+    // Verificar traducción de campos
+    // Test de fallback de idiomas
+  });
+});
+```
+
+##### **5. `content-performance.test.ts` - Tests de Rendimiento de Contenido**
+```typescript
+describe('Content Performance Tests', () => {
+  test('should handle large content datasets efficiently', async () => {
+    // Test con muchos lugares turísticos
+    // Verificar performance de queries complejas
+    // Test de paginación eficiente
+  });
+
+  test('should optimize media loading for places', async () => {
+    // Test de lazy loading de imágenes
+    // Verificar optimización de queries de media
+    // Test de cache de multimedia
+  });
+
+  test('should handle concurrent reviews and ratings', async () => {
+    // Test de múltiples reseñas simultáneas
+    // Verificar integridad de cálculos de rating
+    // Test de performance en updates de promedios
+  });
+
+  test('should optimize event queries by date range', async () => {
+    // Test de queries de eventos por rango de fechas
+    // Verificar índices temporales
+    // Test de performance en eventos recurrentes
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 04:**
+```bash
+npm run test:task-04
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-04:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 04
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en colecciones de contenido
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 04`
+- [ ] 📁 **Colecciones registradas** y funcionando
+- [ ] ⚡ **Performance tests pasan** con datasets grandes
+- [ ] 🔗 **Tests de integración exitosos** entre colecciones
+
+---
+
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
+
+El comando `npm run test:task-04` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
+
+---

@@ -40,13 +40,28 @@ Configurar el entorno base de Payload CMS con todas las dependencias necesarias 
   npm install @types/sharp --save-dev
   ```
 
-### 2. CONFIGURACIÓN BÁSICA DE PAYLOAD
-- [ ] **2.1** - Verificar archivo `payload.config.ts` existe
-- [ ] **2.2** - Configurar configuración básica de admin UI
-- [ ] **2.3** - Configurar configuración de base de datos SQLite
-- [ ] **2.4** - Configurar configuración de uploads básica
+### 2. CONFIGURACIÓN DE TESTING AVANZADO
+- [ ] **2.1** - Instalar Jest y dependencias de testing
+  ```bash
+  npm install jest @types/jest ts-jest --save-dev
+  npm install supertest @types/supertest --save-dev
+  npm install mongodb-memory-server --save-dev
+  npm install jest-html-reporter --save-dev
+  ```
 
-### 3. VARIABLES DE ENTORNO
+- [ ] **2.2** - Crear configuración Jest optimizada (`jest.config.ts`)
+- [ ] **2.3** - Configurar setup de testing (`test/setup.ts`)
+- [ ] **2.4** - Crear helpers para API testing (`test/helpers/`)
+- [ ] **2.5** - Configurar scripts de testing en package.json
+
+### 3. CONFIGURACIÓN BÁSICA DE PAYLOAD
+### 3. CONFIGURACIÓN BÁSICA DE PAYLOAD
+- [ ] **3.1** - Verificar archivo `payload.config.ts` existe
+- [ ] **3.2** - Configurar configuración básica de admin UI
+- [ ] **3.3** - Configurar configuración de base de datos SQLite
+- [ ] **3.4** - Configurar configuración de uploads básica
+
+### 4. VARIABLES DE ENTORNO
 - [ ] **3.1** - Crear archivo `.env.local` con variables base:
   ```env
   PAYLOAD_SECRET=your-secret-key-here
@@ -182,6 +197,154 @@ npx eslint . --ext .ts,.tsx
 ### Error: "TypeScript compilation failed"
 - **Solución:** Generar tipos de Payload
 - **Comando:** `npm run generate:types`
+
+---
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### ⚠️ IMPORTANTE: CRITERIO DE COMPLETITUD
+**Esta tarea solo se considera COMPLETA cuando TODOS los siguientes tests pasan:**
+
+```bash
+npm run test:task-01
+```
+
+### 📂 Tests de la Tarea 01
+Ubicación: `test/tasks/task-01/`
+
+#### test/tasks/task-01/setup.test.ts
+```typescript
+import { existsSync } from 'fs';
+import { join } from 'path';
+
+describe('Task 01: Setup Inicial - Archivos de Configuración', () => {
+  test('debe existir payload.config.ts', () => {
+    const configPath = join(process.cwd(), 'src/payload.config.ts');
+    expect(existsSync(configPath)).toBe(true);
+  });
+
+  test('debe existir .env.local', () => {
+    const envPath = join(process.cwd(), '.env.local');
+    expect(existsSync(envPath)).toBe(true);
+  });
+
+  test('debe existir .env.example', () => {
+    const envExamplePath = join(process.cwd(), '.env.example');
+    expect(existsSync(envExamplePath)).toBe(true);
+  });
+
+  test('debe existir jest.config.ts', () => {
+    const jestConfigPath = join(process.cwd(), 'jest.config.ts');
+    expect(existsSync(jestConfigPath)).toBe(true);
+  });
+});
+```
+
+#### test/tasks/task-01/dependencies.test.ts
+```typescript
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+describe('Task 01: Setup Inicial - Dependencias', () => {
+  let packageJson: any;
+
+  beforeAll(() => {
+    const packagePath = join(process.cwd(), 'package.json');
+    const packageContent = readFileSync(packagePath, 'utf8');
+    packageJson = JSON.parse(packageContent);
+  });
+
+  test('debe tener @payloadcms/next instalado', () => {
+    expect(
+      packageJson.dependencies['@payloadcms/next'] || 
+      packageJson.devDependencies['@payloadcms/next']
+    ).toBeDefined();
+  });
+
+  test('debe tener @payloadcms/db-sqlite instalado', () => {
+    expect(
+      packageJson.dependencies['@payloadcms/db-sqlite'] || 
+      packageJson.devDependencies['@payloadcms/db-sqlite']
+    ).toBeDefined();
+  });
+
+  test('debe tener jest instalado', () => {
+    expect(
+      packageJson.dependencies['jest'] || 
+      packageJson.devDependencies['jest']
+    ).toBeDefined();
+  });
+
+  test('debe tener supertest instalado', () => {
+    expect(
+      packageJson.dependencies['supertest'] || 
+      packageJson.devDependencies['supertest']
+    ).toBeDefined();
+  });
+
+  test('debe tener scripts de testing configurados', () => {
+    expect(packageJson.scripts['test']).toBeDefined();
+    expect(packageJson.scripts['test:task-01']).toBeDefined();
+  });
+});
+```
+
+#### test/tasks/task-01/config.test.ts
+```typescript
+import payload from 'payload';
+
+describe('Task 01: Setup Inicial - Configuración Payload', () => {
+  beforeAll(async () => {
+    // Inicializar Payload para testing
+    await payload.init({
+      secret: process.env.PAYLOAD_SECRET || 'test-secret',
+      local: true,
+    });
+  });
+
+  afterAll(async () => {
+    await payload.db.destroy();
+  });
+
+  test('debe inicializar Payload correctamente', () => {
+    expect(payload).toBeDefined();
+    expect(payload.config).toBeDefined();
+  });
+
+  test('debe tener configuración de base de datos', () => {
+    expect(payload.config.db).toBeDefined();
+  });
+
+  test('debe tener secret configurado', () => {
+    expect(payload.config.secret).toBeDefined();
+    expect(payload.config.secret).not.toBe('');
+  });
+
+  test('debe tener admin UI configurado', () => {
+    expect(payload.config.admin).toBeDefined();
+  });
+});
+```
+
+### 🏃‍♂️ Ejecutar Tests de la Tarea
+```bash
+# Ejecutar solo los tests de la tarea 01
+npm run test:task-01
+
+# Ver reporte detallado
+npm run test:task-01 -- --verbose
+
+# Ejecutar con cobertura
+npm run test:task-01 -- --coverage
+```
+
+### ✅ Validación Automática
+```bash
+# Validar que la tarea está completa
+node scripts/validate-task.js 1
+```
+
+**Estado de Tests:** [ ] PENDIENTE → [🧪] EJECUTANDO → [✅] PASANDO
 
 ---
 

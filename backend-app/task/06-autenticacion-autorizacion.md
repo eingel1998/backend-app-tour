@@ -434,3 +434,227 @@ Al finalizar esta tarea, deberías tener:
 **Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
 
 **Siguiente tarea:** `07-endpoints-personalizados.md`
+
+---
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-06/`**
+
+##### **1. `auth-config.test.ts` - Tests de Configuración de Autenticación**
+```typescript
+describe('Task 06 - Authentication Configuration', () => {
+  test('should have proper JWT configuration', async () => {
+    // Verificar configuración JWT en payload.config.ts
+    // Test de secret key y expiration settings
+    // Verificar configuración de refresh tokens
+  });
+
+  test('should have auth strategies configured correctly', async () => {
+    // Test de local strategy configuration
+    // Verificar collections auth setup
+    // Test de configuración de cookies y sessions
+  });
+
+  test('should have proper CORS configuration', async () => {
+    // Test de CORS para frontend móvil
+    // Verificar origins permitidos
+    // Test de headers y methods permitidos
+  });
+
+  test('should have rate limiting configured', async () => {
+    // Test de rate limiting en endpoints auth
+    // Verificar límites por IP y por usuario
+    // Test de configuración de ventanas de tiempo
+  });
+
+  test('should have security headers configured', async () => {
+    // Test de security headers (helmet)
+    // Verificar HTTPS enforcement
+    // Test de protección XSS y CSRF
+  });
+});
+```
+
+##### **2. `auth-endpoints.test.ts` - Tests de Endpoints de Autenticación**
+```typescript
+describe('Authentication Endpoints Tests', () => {
+  test('should handle user registration correctly', async () => {
+    // Test de POST /api/auth/register
+    // Verificar validación de datos de registro
+    // Test de creación de usuario normal y business
+  });
+
+  test('should handle user login properly', async () => {
+    // Test de POST /api/auth/login
+    // Verificar generación de JWT tokens
+    // Test de actualización de lastLogin
+  });
+
+  test('should handle logout and token invalidation', async () => {
+    // Test de POST /api/auth/logout
+    // Verificar invalidación de tokens
+    // Test de limpieza de sessions
+  });
+
+  test('should handle password reset workflow', async () => {
+    // Test de POST /api/auth/forgot-password
+    // Test de POST /api/auth/reset-password
+    // Verificar envío de emails y tokens temporales
+  });
+
+  test('should handle profile updates with authentication', async () => {
+    // Test de PUT /api/auth/profile
+    // Verificar autorización de usuario
+    // Test de validación de cambios de datos
+  });
+
+  test('should handle refresh token mechanism', async () => {
+    // Test de POST /api/auth/refresh
+    // Verificar renovación de tokens
+    // Test de invalidación de tokens expirados
+  });
+});
+```
+
+##### **3. `authorization-roles.test.ts` - Tests de Autorización y Roles**
+```typescript
+describe('Authorization and Roles Tests', () => {
+  test('should handle role-based access control correctly', async () => {
+    // Test de permisos por rol: user, business, admin
+    // Verificar access control en colecciones
+    // Test de restricciones específicas por rol
+  });
+
+  test('should validate business-specific permissions', async () => {
+    // Test de permisos especiales para users business
+    // Verificar acceso a business data
+    // Test de gestión de lugares y eventos propios
+  });
+
+  test('should handle admin privileges properly', async () => {
+    // Test de permisos administrativos
+    // Verificar acceso completo a todas las colecciones
+    // Test de capacidades de moderación
+  });
+
+  test('should enforce user data privacy', async () => {
+    // Test de acceso a datos propios únicamente
+    // Verificar protección de datos personales
+    // Test de restricciones de lectura entre usuarios
+  });
+
+  test('should handle conditional access based on verification', async () => {
+    // Test de acceso basado en verificación
+    // Verificar restricciones para usuarios no verificados
+    // Test de permisos progresivos
+  });
+});
+```
+
+##### **4. `api-security.test.ts` - Tests de Seguridad de API**
+```typescript
+describe('API Security Tests', () => {
+  test('should protect against common vulnerabilities', async () => {
+    // Test de protección XSS
+    // Verificar sanitización de inputs
+    // Test de protección CSRF
+  });
+
+  test('should handle rate limiting effectively', async () => {
+    // Test de límites de requests por minuto
+    // Verificar comportamiento con límites excedidos
+    // Test de whitelisting de IPs admin
+  });
+
+  test('should validate API keys and tokens properly', async () => {
+    // Test de validación de JWT tokens
+    // Verificar detección de tokens manipulados
+    // Test de manejo de tokens expirados
+  });
+
+  test('should handle brute force protection', async () => {
+    // Test de protección contra ataques de fuerza bruta
+    // Verificar bloqueo temporal de cuentas
+    // Test de detección de patrones sospechosos
+  });
+
+  test('should encrypt sensitive data correctly', async () => {
+    // Test de encriptación de passwords
+    // Verificar hashing de datos sensibles
+    // Test de protección de datos personales
+  });
+});
+```
+
+##### **5. `auth-integration.test.ts` - Tests de Integración de Autenticación**
+```typescript
+describe('Authentication Integration Tests', () => {
+  test('should integrate with all collections properly', async () => {
+    // Test de autenticación en todas las colecciones
+    // Verificar permisos en Places, Reviews, Events
+    // Test de integridad de relaciones user
+  });
+
+  test('should handle session management across features', async () => {
+    // Test de sesiones en conversaciones
+    // Verificar persistencia de contexto usuario
+    // Test de timeout de sesiones inactivas
+  });
+
+  test('should manage user preferences and personalization', async () => {
+    // Test de acceso a preferencias personales
+    // Verificar sincronización de datos usuario
+    // Test de privacidad en recommendations
+  });
+
+  test('should handle business verification workflow', async () => {
+    // Test de flujo de verificación business
+    // Verificar proceso de aprobación
+    // Test de cambios de estado de verificación
+  });
+
+  test('should support multi-device authentication', async () => {
+    // Test de login desde múltiples dispositivos
+    // Verificar gestión de sesiones múltiples
+    // Test de logout remoto de dispositivos
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 06:**
+```bash
+npm run test:task-06
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-06:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 06
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en módulos de autenticación
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 06`
+- [ ] 🔐 **Tests de seguridad pasan** todos los casos
+- [ ] ⚡ **Tests de autorización funcionando** correctamente
+- [ ] 🔗 **Integración con colecciones validada**
+
+---
+
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
+
+El comando `npm run test:task-06` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
+
+---

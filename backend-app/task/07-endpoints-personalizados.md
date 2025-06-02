@@ -338,81 +338,224 @@ curl http://localhost:3000/api/health/services
 
 ---
 
-## 📝 NOTAS TÉCNICAS
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
 
-### Búsqueda Geográfica con Haversine
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-07/`**
+
+##### **1. `search-endpoints.test.ts` - Tests de Endpoints de Búsqueda**
 ```typescript
-// Cálculo de distancia entre coordenadas
-const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-  const R = 6371; // Radio de la Tierra en km
-  const dLat = toRad(lat2 - lat1);
-  const dLon = toRad(lon2 - lon1);
-  const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  return R * c;
-};
+describe('Task 07 - Search Endpoints', () => {
+  test('should handle advanced place search correctly', async () => {
+    // Test de GET /api/search/places
+    // Verificar búsqueda por múltiples criterios
+    // Test de filtros: query, category, location, radius
+  });
+
+  test('should perform full-text search across multiple fields', async () => {
+    // Test de búsqueda de texto libre
+    // Verificar búsqueda en name, description, tags, address
+    // Test de relevancia scoring
+  });
+
+  test('should handle geographical search properly', async () => {
+    // Test de GET /api/search/nearby
+    // Verificar búsqueda por coordenadas y radio
+    // Test de cálculo y ordenamiento por distancia
+  });
+
+  test('should search recommendations effectively', async () => {
+    // Test de GET /api/search/recommendations
+    // Verificar filtros por type, theme, duration, budget
+    // Test de acceso sin autenticación
+  });
+
+  test('should handle event search with date filtering', async () => {
+    // Test de GET /api/search/events
+    // Verificar filtros por fecha, ubicación, tipo
+    // Test de eventos recurrentes y únicos
+  });
+
+  test('should support multilingual search capabilities', async () => {
+    // Test de búsqueda en español
+    // Test de términos en wayuunaiki
+    // Verificar normalización de caracteres
+  });
+});
 ```
 
-### Cache Strategy para APIs Externas
+##### **2. `geolocation-endpoints.test.ts` - Tests de Endpoints de Geolocalización**
 ```typescript
-// Cache simple con TTL
-const cache = new Map();
-const CACHE_TTL = {
-  weather: 60 * 60 * 1000, // 1 hora
-  currency: 24 * 60 * 60 * 1000, // 24 horas
-  translations: 7 * 24 * 60 * 60 * 1000 // 7 días
-};
+describe('Geolocation Endpoints Tests', () => {
+  test('should calculate routes between places correctly', async () => {
+    // Test de GET /api/geo/route
+    // Verificar cálculo de rutas entre puntos
+    // Test de múltiples paradas y optimización
+  });
+
+  test('should provide weather information for locations', async () => {
+    // Test de GET /api/geo/weather
+    // Verificar integración con API meteorológica
+    // Test de pronóstico para Riohacha
+  });
+
+  test('should handle directions and navigation', async () => {
+    // Test de GET /api/geo/directions
+    // Verificar direcciones paso a paso
+    // Test de diferentes modos de transporte
+  });
+
+  test('should validate geographical coordinates', async () => {
+    // Test de validación de coordenadas
+    // Verificar límites geográficos de Riohacha
+    // Test de conversión de formatos de coordenadas
+  });
+
+  test('should handle proximity calculations efficiently', async () => {
+    // Test de cálculos de proximidad masivos
+    // Verificar performance con muchos puntos
+    // Test de algoritmos de optimización geográfica
+  });
+});
 ```
 
-### Rate Limiting por Endpoint
+##### **3. `analytics-endpoints.test.ts` - Tests de Endpoints de Analytics**
 ```typescript
-// Configuración específica por endpoint
-const endpointLimits = {
-  '/api/search/*': { windowMs: 60000, max: 100 }, // 100/min
-  '/api/geo/*': { windowMs: 60000, max: 50 }, // 50/min
-  '/api/analytics/*': { windowMs: 60000, max: 20 } // 20/min
-};
+describe('Analytics Endpoints Tests', () => {
+  test('should provide comprehensive visit statistics', async () => {
+    // Test de GET /api/analytics/visits
+    // Verificar estadísticas de visitas por lugar
+    // Test de agregaciones temporales
+  });
+
+  test('should track user behavior analytics', async () => {
+    // Test de GET /api/analytics/behavior
+    // Verificar tracking de interacciones
+    // Test de análisis de patrones de uso
+  });
+
+  test('should generate business analytics reports', async () => {
+    // Test de GET /api/analytics/business
+    // Verificar métricas específicas para business users
+    // Test de reportes de performance
+  });
+
+  test('should provide tourism trend analysis', async () => {
+    // Test de GET /api/analytics/trends
+    // Verificar análisis de tendencias turísticas
+    // Test de predicciones y forecasting
+  });
+
+  test('should handle real-time analytics updates', async () => {
+    // Test de endpoints de analytics en tiempo real
+    // Verificar actualización de métricas live
+    // Test de WebSocket integration para analytics
+  });
+});
 ```
+
+##### **4. `integration-endpoints.test.ts` - Tests de Endpoints de Integración**
+```typescript
+describe('Integration Endpoints Tests', () => {
+  test('should integrate with social media platforms', async () => {
+    // Test de POST /api/integrations/social
+    // Verificar compartir en redes sociales
+    // Test de autenticación con plataformas externas
+  });
+
+  test('should handle payment processing integration', async () => {
+    // Test de POST /api/integrations/payments
+    // Verificar integración con procesadores de pago
+    // Test de webhooks de confirmación
+  });
+
+  test('should manage external booking systems', async () => {
+    // Test de integración con sistemas de reservas
+    // Verificar disponibilidad y booking de eventos
+    // Test de sincronización de datos de reservas
+  });
+
+  test('should handle notification services', async () => {
+    // Test de POST /api/integrations/notifications
+    // Verificar envío de emails y push notifications
+    // Test de templates y personalización
+  });
+
+  test('should integrate with external tourism APIs', async () => {
+    // Test de integración con APIs turísticas
+    // Verificar datos de transporte público
+    // Test de información de servicios locales
+  });
+});
+```
+
+##### **5. `specialized-endpoints.test.ts` - Tests de Endpoints Especializados**
+```typescript
+describe('Specialized Endpoints Tests', () => {
+  test('should handle cultural heritage information', async () => {
+    // Test de GET /api/culture/heritage
+    // Verificar información de patrimonio cultural wayuu
+    // Test de contenido cultural específico de Riohacha
+  });
+
+  test('should provide gastronomy recommendations', async () => {
+    // Test de GET /api/gastronomy/recommendations
+    // Verificar recomendaciones de platos locales
+    // Test de información nutricional y cultural
+  });
+
+  test('should handle accessibility information', async () => {
+    // Test de GET /api/accessibility/info
+    // Verificar información de accesibilidad por lugar
+    // Test de filtros por tipo de discapacidad
+  });
+
+  test('should manage emergency and safety endpoints', async () => {
+    // Test de GET /api/safety/emergency
+    // Verificar información de seguridad turística
+    // Test de contactos de emergencia locales
+  });
+
+  test('should provide transportation information', async () => {
+    // Test de GET /api/transport/info
+    // Verificar información de transporte público
+    // Test de horarios y rutas locales
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 07:**
+```bash
+npm run test:task-07
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-07:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 07
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en endpoints personalizados
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 07`
+- [ ] 🔗 **Integración con servicios externos funcionando**
+- [ ] ⚡ **Performance tests pasan** en búsquedas complejas
+- [ ] 📍 **Endpoints de geolocalización validados**
 
 ---
 
-## 🚨 PROBLEMAS COMUNES
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
 
-### Error: "Search timeout"
-- **Causa:** Query muy compleja o base de datos lenta
-- **Solución:** Optimizar índices, implementar paginación
-
-### Error: "Geocoding service unavailable"
-- **Causa:** Servicio externo no disponible
-- **Solución:** Implementar fallback y cache
-
-### Error: "Analytics calculation failed"
-- **Causa:** Datos insuficientes o query compleja
-- **Solución:** Validar datos, simplificar cálculos
-
-### Error: "External API rate limit exceeded"
-- **Causa:** Límites de APIs externas
-- **Solución:** Implementar cache agresivo, múltiples providers
+El comando `npm run test:task-07` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
 
 ---
-
-## 📋 CHECKLIST DE COMPLETITUD
-
-Al finalizar esta tarea, deberías tener:
-
-- [ ] ✅ Endpoints de búsqueda avanzada funcionando
-- [ ] ✅ Geolocalización y cálculo de distancias
-- [ ] ✅ Sistema de analytics y estadísticas
-- [ ] ✅ Integraciones con servicios externos
-- [ ] ✅ Utilidades específicas del dominio
-- [ ] ✅ Sistema de notificaciones básico
-- [ ] ✅ Herramientas de moderación
-- [ ] ✅ Health checks y monitoreo
-- [ ] ✅ Rate limiting apropiado
-- [ ] ✅ Cache strategy implementada
-
-**Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
-
-**Siguiente tarea:** `08-integracion-ia.md`

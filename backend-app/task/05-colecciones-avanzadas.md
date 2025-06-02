@@ -437,3 +437,225 @@ Al finalizar esta tarea, deberías tener:
 **Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
 
 **Siguiente tarea:** `06-autenticacion-autorizacion.md`
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-05/`**
+
+##### **1. `conversations-collection.test.ts` - Tests de Colección Conversations**
+```typescript
+describe('Task 05 - Conversations Collection', () => {
+  test('should have Conversations collection with chat structure', async () => {
+    // Verificar estructura básica de Conversations.ts
+    // Test de campos: user, sessionId, title, isActive
+    // Verificar soporte multiidioma (es, en, wayuu)
+  });
+
+  test('should handle user context for personalization', async () => {
+    // Test de grupo userContext
+    // Verificar currentLocation con coordenadas
+    // Test de preferences y sessionData JSON
+  });
+
+  test('should manage assistant settings correctly', async () => {
+    // Test de assistantSettings
+    // Verificar personality options
+    // Test de responseLength y configuraciones
+  });
+
+  test('should handle embedded messages array properly', async () => {
+    // Test de array messages embebido
+    // Verificar estructura de mensajes (sender, messageType)
+    // Test de processingData con métricas de IA
+  });
+
+  test('should manage conversation statistics', async () => {
+    // Test de grupo statistics (solo lectura)
+    // Verificar cálculos automáticos
+    // Test de métricas de uso y performance
+  });
+
+  test('should support multilingual conversations', async () => {
+    // Test de conversaciones en español
+    // Test de conversaciones en inglés
+    // Test de soporte para idioma wayuu
+  });
+});
+```
+
+##### **2. `recommendations-collection.test.ts` - Tests de Colección Recommendations**
+```typescript
+describe('Recommendations Collection Tests', () => {
+  test('should have Recommendations collection with AI-powered structure', async () => {
+    // Verificar estructura de Recommendations.ts
+    // Test de campos: user, type, title, description
+    // Verificar relación con conversaciones
+  });
+
+  test('should handle different recommendation types', async () => {
+    // Test de types: place, itinerary, event, experience
+    // Verificar estructura específica por tipo
+    // Test de validaciones condicionales
+  });
+
+  test('should manage itinerary data correctly', async () => {
+    // Test de grupo itinerary
+    // Verificar estructura de días y actividades
+    // Test de cálculos de duración y costos
+  });
+
+  test('should handle AI generation metadata', async () => {
+    // Test de aiGeneration group
+    // Verificar modelo usado, tokens, confidence
+    // Test de prompts y parámetros de generación
+  });
+
+  test('should manage user feedback and ratings', async () => {
+    // Test de userFeedback
+    // Verificar rating, implementation status
+    // Test de feedback para mejora del algoritmo
+  });
+
+  test('should calculate personalization scores', async () => {
+    // Test de personalizationScore
+    // Verificar factores de personalización
+    // Test de weights para diferentes criterios
+  });
+});
+```
+
+##### **3. `ai-integration.test.ts` - Tests de Integración con IA**
+```typescript
+describe('AI Integration Tests', () => {
+  test('should integrate with AI service for conversations', async () => {
+    // Test de integración con servicio de IA
+    // Verificar procesamiento de mensajes
+    // Test de respuesta contextual
+  });
+
+  test('should generate recommendations based on user data', async () => {
+    // Test de generación de recomendaciones
+    // Verificar uso de preferencias de usuario
+    // Test de algoritmo de personalización
+  });
+
+  test('should handle AI processing metadata correctly', async () => {
+    // Test de almacenamiento de metadata de IA
+    // Verificar tokens utilizados
+    // Test de confidence scores
+  });
+
+  test('should support contextual recommendations', async () => {
+    // Test de recomendaciones contextuales
+    // Verificar uso de ubicación actual
+    // Test de recomendaciones basadas en historial
+  });
+
+  test('should handle AI service errors gracefully', async () => {
+    // Test de manejo de errores de servicio IA
+    // Verificar fallbacks y respuestas de emergencia
+    // Test de retry mechanisms
+  });
+});
+```
+
+##### **4. `advanced-collections-integration.test.ts` - Tests de Integración Avanzada**
+```typescript
+describe('Advanced Collections Integration Tests', () => {
+  test('should integrate conversations with recommendations', async () => {
+    // Test de relación conversations -> recommendations
+    // Verificar generación automática de recomendaciones
+    // Test de continuidad de contexto
+  });
+
+  test('should handle complex user journey tracking', async () => {
+    // Test de seguimiento de journey completo
+    // Verificar datos de sesión persistentes
+    // Test de analytics de conversaciones
+  });
+
+  test('should support real-time conversation updates', async () => {
+    // Test de actualizaciones en tiempo real
+    // Verificar websockets o polling
+    // Test de sincronización de mensajes
+  });
+
+  test('should manage conversation and recommendation lifecycle', async () => {
+    // Test de archivado de conversaciones antiguas
+    // Verificar limpieza de datos temporales
+    // Test de retention policies
+  });
+
+  test('should handle privacy and data protection', async () => {
+    // Test de anonimización de datos sensibles
+    // Verificar cumplimiento de privacidad
+    // Test de exportación/eliminación de datos
+  });
+});
+```
+
+##### **5. `advanced-performance.test.ts` - Tests de Rendimiento Avanzado**
+```typescript
+describe('Advanced Performance Tests', () => {
+  test('should handle concurrent conversations efficiently', async () => {
+    // Test de múltiples conversaciones simultáneas
+    // Verificar performance con muchos usuarios activos
+    // Test de gestión de memoria con arrays embebidos
+  });
+
+  test('should optimize AI processing and response times', async () => {
+    // Test de tiempos de respuesta de IA
+    // Verificar caching de respuestas comunes
+    // Test de optimización de tokens
+  });
+
+  test('should handle large recommendation datasets', async () => {
+    // Test con muchas recomendaciones almacenadas
+    // Verificar queries de recomendaciones personalizadas
+    // Test de algoritmos de ranking eficientes
+  });
+
+  test('should manage conversation history efficiently', async () => {
+    // Test de queries en historiales largos
+    // Verificar paginación de mensajes
+    // Test de compresión de datos antiguos
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 05:**
+```bash
+npm run test:task-05
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-05:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 05
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en colecciones avanzadas
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 05`
+- [ ] 🤖 **Tests de integración IA exitosos**
+- [ ] ⚡ **Performance tests pasan** con datasets complejos
+- [ ] 🔗 **Tests de integración avanzada funcionando**
+
+---
+
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
+
+El comando `npm run test:task-05` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
+
+---

@@ -301,3 +301,209 @@ Al finalizar esta tarea, deberías tener:
 **Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
 
 **Siguiente tarea:** `04-colecciones-contenido.md`
+
+---
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-03/`**
+
+##### **1. `users-collection.test.ts` - Tests de Colección Users**
+```typescript
+describe('Task 03 - Users Collection', () => {
+  test('should have Users collection properly configured', async () => {
+    // Verificar estructura básica de Users.ts
+    // Validar campos básicos: email, password, firstName, etc.
+    // Verificar configuración de userType enum
+  });
+
+  test('should handle userType conditional fields correctly', async () => {
+    // Test de campos condicionales para businessData
+    // Verificar que businessData solo aparece si userType === 'business'
+    // Validar estructura de businessData fields
+  });
+
+  test('should validate business user registration', async () => {
+    // Test de registro de usuario business
+    // Verificar campos requeridos para business
+    // Validar coordenadas y ubicación
+  });
+
+  test('should have proper access control configured', async () => {
+    // Test de permisos create: público
+    // Test de permisos read: self + admins + business público
+    // Test de permisos update/delete: self + admins
+  });
+
+  test('should execute hooks correctly', async () => {
+    // Test de beforeValidate hook (password encryption)
+    // Test de afterLogin hook (lastLogin update)
+    // Test de validación condicional por userType
+  });
+});
+```
+
+##### **2. `media-collection.test.ts` - Tests de Colección Media**
+```typescript
+describe('Media Collection Tests', () => {
+  test('should have Media collection with proper upload configuration', async () => {
+    // Verificar configuración de upload
+    // Validar tipos de archivo permitidos
+    // Verificar configuración de resize automático
+  });
+
+  test('should handle different media types correctly', async () => {
+    // Test de imágenes (JPEG, PNG, WebP)
+    // Test de videos (MP4, WebM)
+    // Test de documentos (PDF)
+  });
+
+  test('should have proper metadata extraction', async () => {
+    // Test de extracción de metadata
+    // Verificar alt text automático
+    // Validar información de geolocalización
+  });
+
+  test('should optimize images automatically', async () => {
+    // Test de resize automático
+    // Verificar compresión de imágenes
+    // Validar generación de thumbnails
+  });
+
+  test('should have security validation for uploads', async () => {
+    // Test de validación de tipos de archivo
+    // Verificar límites de tamaño
+    // Validar sanitización de nombres de archivo
+  });
+});
+```
+
+##### **3. `categories-collection.test.ts` - Tests de Colección Categories**
+```typescript
+describe('Categories Collection Tests', () => {
+  test('should have Categories collection with hierarchical structure', async () => {
+    // Verificar estructura de categorías
+    // Test de relación parent/children
+    // Validar configuración de jerarquía
+  });
+
+  test('should create tourism categories for Riohacha', async () => {
+    // Test de categorías específicas de turismo
+    // Verificar iconos y colores
+    // Validar traducciones español/inglés
+  });
+
+  test('should handle category relationships correctly', async () => {
+    // Test de relaciones padre-hijo
+    // Verificar queries de categorías anidadas
+    // Validar integridad referencial
+  });
+
+  test('should have proper SEO configuration', async () => {
+    // Test de campos SEO (slug, meta, description)
+    // Verificar generación automática de slug
+    // Validar URLs amigables
+  });
+
+  test('should validate category data integrity', async () => {
+    // Test de validación de campos requeridos
+    // Verificar unicidad de slugs
+    // Validar formato de colores e iconos
+  });
+});
+```
+
+##### **4. `collections-integration.test.ts` - Tests de Integración**
+```typescript
+describe('Collections Integration Tests', () => {
+  test('should have all three collections properly registered', async () => {
+    // Verificar registro en payload.config.ts
+    // Test de inicialización correcta
+    // Validar ausencia de conflictos de nombres
+  });
+
+  test('should handle relationships between collections', async () => {
+    // Test de relación Users -> Media (profileImage)
+    // Test de relación Users -> Categories (favoritos)
+    // Verificar integridad referencial
+  });
+
+  test('should have proper database schema generation', async () => {
+    // Test de generación de tablas
+    // Verificar índices automáticos
+    // Validar constraints de foreign keys
+  });
+
+  test('should support CRUD operations on all collections', async () => {
+    // Test de Create, Read, Update, Delete
+    // Verificar validaciones en cada operación
+    // Test de bulk operations
+  });
+
+  test('should have admin UI properly configured', async () => {
+    // Test de configuración de admin panel
+    // Verificar grupos y tabs en Users
+    // Validar ordenamiento y filtros
+  });
+});
+```
+
+##### **5. `collections-performance.test.ts` - Tests de Rendimiento**
+```typescript
+describe('Collections Performance Tests', () => {
+  test('should handle large dataset operations efficiently', async () => {
+    // Test de queries con muchos registros
+    // Verificar performance de búsquedas
+    // Validar uso de índices
+  });
+
+  test('should optimize media upload and processing', async () => {
+    // Test de upload de archivos grandes
+    // Verificar tiempo de procesamiento de imágenes
+    // Validar uso de memoria durante resize
+  });
+
+  test('should cache frequently accessed data', async () => {
+    // Test de caching de categorías
+    // Verificar cache de perfiles de usuario
+    // Validar invalidación de cache
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 03:**
+```bash
+npm run test:task-03
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-03:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 03
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en archivos de colecciones
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 03`
+- [ ] 📁 **Colecciones registradas** en payload.config.ts
+- [ ] ⚡ **Performance tests pasan** con métricas aceptables
+- [ ] 🔐 **Tests de seguridad y permisos funcionando** correctamente
+
+---
+
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
+
+El comando `npm run test:task-03` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
+
+---

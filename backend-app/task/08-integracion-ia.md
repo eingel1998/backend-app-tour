@@ -363,146 +363,230 @@ Implementar la integración completa con servicios de Inteligencia Artificial pa
 
 ---
 
-## 🛠️ COMANDOS ÚTILES
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
 
-### Testing de IA
-```bash
-# Conversación completa
-curl -X POST http://localhost:3000/api/ai/chat \
-  -H "Authorization: Bearer TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "conversationId": "conv_123",
-    "message": "¿Qué puedo hacer en Riohacha este fin de semana?",
-    "context": {
-      "location": {"lat": 11.5447, "lng": -72.9072},
-      "budget": {"max": 200000, "currency": "COP"}
-    }
-  }'
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
 
-# Recomendación directa
-curl -X POST http://localhost:3000/api/ai/recommend \
-  -H "Authorization: Bearer TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "type": "itinerary",
-    "duration": 2,
-    "interests": ["culture", "beach"],
-    "groupSize": 2
-  }'
+#### **📁 Estructura de Tests: `test/tasks/task-08/`**
 
-# Análisis de sentimiento
-curl -X POST http://localhost:3000/api/ai/analyze \
-  -H "Content-Type: application/json" \
-  -d '{
-    "text": "El lugar es hermoso pero el servicio fue terrible",
-    "type": "review"
-  }'
-```
-
-### Monitoreo de IA
-```bash
-# Ver métricas de uso
-curl -H "Authorization: Bearer ADMIN_TOKEN" \
-  http://localhost:3000/api/ai/metrics
-
-# Revisar logs de IA
-tail -f logs/ai-service.log | grep "ERROR"
-
-# Verificar costos del día
-curl -H "Authorization: Bearer ADMIN_TOKEN" \
-  http://localhost:3000/api/ai/costs?period=today
-```
-
----
-
-## 📝 NOTAS TÉCNICAS
-
-### Prompt Engineering Best Practices
+##### **1. `ai-config.test.ts` - Tests de Configuración de IA**
 ```typescript
-// Estructura de prompt optimizada
-const createPrompt = (context: Context, userMessage: string) => {
-  return `
-    ${SYSTEM_PROMPT}
-    
-    CONTEXTO ACTUAL:
-    - Ubicación: ${context.location}
-    - Hora: ${context.timestamp}
-    - Preferencias: ${JSON.stringify(context.preferences)}
-    
-    HISTORIAL RECIENTE:
-    ${context.recentMessages.slice(-3).join('\n')}
-    
-    USUARIO: ${userMessage}
-    
-    ASISTENTE: [Responde como WAYUU AI, incluye recomendaciones específicas cuando sea relevante]
-  `;
-};
-```
-
-### Rate Limiting para IA
-```typescript
-// Configuración específica para endpoints de IA
-const aiRateLimit = {
-  windowMs: 60 * 60 * 1000, // 1 hora
-  max: 50, // 50 requests por hora por usuario
-  message: 'Límite de consultas de IA alcanzado, intenta en 1 hora',
-  standardHeaders: true
-};
-```
-
-### Cost Tracking
-```typescript
-// Tracking de costos por provider
-const trackCost = async (userId: string, provider: string, tokens: number) => {
-  const cost = calculateCost(provider, tokens);
-  await saveCostRecord({
-    userId,
-    provider,
-    tokens,
-    cost,
-    timestamp: new Date()
+describe('Task 08 - AI Configuration', () => {
+  test('should have AI providers properly configured', async () => {
+    // Verificar configuración de providers (OpenAI, Anthropic, Local)
+    // Test de API keys y endpoints
+    // Verificar configuración de modelos y tokens
   });
-};
+
+  test('should implement provider factory pattern correctly', async () => {
+    // Test de factory pattern para providers
+    // Verificar cambio dinámico de provider
+    // Test de fallback automático entre providers
+  });
+
+  test('should handle rate limiting and quotas properly', async () => {
+    // Test de límites de tokens por usuario
+    // Verificar rate limiting específico para IA
+    // Test de cost tracking por provider
+  });
+
+  test('should validate AI service connectivity', async () => {
+    // Test de conectividad con servicios de IA
+    // Verificar health checks de providers
+    // Test de timeout y retry mechanisms
+  });
+
+  test('should handle AI service authentication', async () => {
+    // Test de autenticación con providers externos
+    // Verificar manejo de API keys
+    // Test de renovación de tokens cuando sea aplicable
+  });
+});
 ```
 
+##### **2. `ai-assistant.test.ts` - Tests del Asistente Virtual**
+```typescript
+describe('AI Virtual Assistant Tests', () => {
+  test('should handle tourism conversations correctly', async () => {
+    // Test de conversaciones turísticas básicas
+    // Verificar respuestas contextualmente apropiadas
+    // Test de manejo de preguntas sobre Riohacha
+  });
+
+  test('should provide personalized recommendations', async () => {
+    // Test de recomendaciones basadas en preferencias
+    // Verificar uso de historial de conversaciones
+    // Test de personalización según perfil de usuario
+  });
+
+  test('should handle multilingual interactions', async () => {
+    // Test de conversaciones en español
+    // Test de conversaciones en inglés
+    // Test de reconocimiento y respuestas en wayuunaiki
+  });
+
+  test('should manage conversation context effectively', async () => {
+    // Test de mantenimiento de contexto en conversación
+    // Verificar memoria de interacciones previas
+    // Test de relevancia contextual en respuestas
+  });
+
+  test('should handle specialized tourism queries', async () => {
+    // Test de consultas sobre cultura wayuu
+    // Verificar información gastronómica local
+    // Test de recomendaciones de actividades específicas
+  });
+
+  test('should integrate with local knowledge base', async () => {
+    // Test de integración con datos locales de Riohacha
+    // Verificar uso de información cultural específica
+    // Test de actualización de conocimiento local
+  });
+});
+```
+
+##### **3. `ai-recommendations.test.ts` - Tests de Recomendaciones IA**
+```typescript
+describe('AI Recommendations Tests', () => {
+  test('should generate intelligent itineraries', async () => {
+    // Test de generación de itinerarios personalizados
+    // Verificar optimización de rutas y tiempos
+    // Test de consideración de preferencias y restricciones
+  });
+
+  test('should analyze user preferences correctly', async () => {
+    // Test de análisis de patrones de usuario
+    // Verificar aprendizaje de preferencias implícitas
+    // Test de actualización de perfiles de interés
+  });
+
+  test('should provide contextual suggestions', async () => {
+    // Test de sugerencias basadas en ubicación actual
+    // Verificar recomendaciones según hora del día
+    // Test de consideración de factores climáticos
+  });
+
+  test('should handle group travel recommendations', async () => {
+    // Test de recomendaciones para grupos
+    // Verificar consideración de múltiples preferencias
+    // Test de actividades familiares vs. adultos
+  });
+
+  test('should optimize recommendations by budget', async () => {
+    // Test de recomendaciones según presupuesto
+    // Verificar opciones gratuitas y de pago
+    // Test de maximización de valor por dinero invertido
+  });
+});
+```
+
+##### **4. `ai-analysis.test.ts` - Tests de Análisis con IA**
+```typescript
+describe('AI Analysis Tests', () => {
+  test('should perform sentiment analysis on reviews', async () => {
+    // Test de análisis de sentimientos en reseñas
+    // Verificar clasificación de emociones
+    // Test de detección de aspectos específicos comentados
+  });
+
+  test('should extract insights from user interactions', async () => {
+    // Test de extracción de insights de comportamiento
+    // Verificar identificación de patrones de uso
+    // Test de predicción de preferencias futuras
+  });
+
+  test('should analyze tourism trends', async () => {
+    // Test de análisis de tendencias turísticas
+    // Verificar identificación de lugares populares
+    // Test de predicción de demanda estacional
+  });
+
+  test('should detect and flag inappropriate content', async () => {
+    // Test de detección de contenido inapropiado
+    // Verificar clasificación de contenido ofensivo
+    // Test de moderación automática de reseñas
+  });
+
+  test('should provide business intelligence insights', async () => {
+    // Test de insights para business users
+    // Verificar análisis de competencia
+    // Test de recomendaciones de mejora para negocios
+  });
+});
+```
+
+##### **5. `ai-integration.test.ts` - Tests de Integración IA**
+```typescript
+describe('AI Integration Tests', () => {
+  test('should integrate AI with all system components', async () => {
+    // Test de integración IA con conversaciones
+    // Verificar integración con sistema de recomendaciones
+    // Test de integración con análisis de datos
+  });
+
+  test('should handle AI processing errors gracefully', async () => {
+    // Test de manejo de errores de servicios IA
+    // Verificar fallback a respuestas predefinidas
+    // Test de notificación de errores a usuarios
+  });
+
+  test('should manage AI processing performance', async () => {
+    // Test de performance en procesamiento IA
+    // Verificar tiempos de respuesta aceptables
+    // Test de optimización de queries complejas
+  });
+
+  test('should handle concurrent AI requests', async () => {
+    // Test de múltiples requests IA simultáneos
+    // Verificar gestión de cola de procesamiento
+    // Test de priorización de requests críticos
+  });
+
+  test('should maintain data privacy in AI processing', async () => {
+    // Test de privacidad en procesamiento IA
+    // Verificar anonimización de datos sensibles
+    // Test de cumplimiento de políticas de privacidad
+  });
+
+  test('should log and monitor AI usage effectively', async () => {
+    // Test de logging de uso de IA
+    // Verificar métricas de performance y costos
+    // Test de alertas por uso excesivo o errores
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 08:**
+```bash
+npm run test:task-08
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-08:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 08
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en módulos de IA
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 08`
+- [ ] 🤖 **Integración con providers IA funcionando**
+- [ ] ⚡ **Performance de IA dentro de límites aceptables**
+- [ ] 🔒 **Tests de privacidad y seguridad exitosos**
+
 ---
 
-## 🚨 PROBLEMAS COMUNES
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
 
-### Error: "AI service timeout"
-- **Causa:** Provider de IA lento o no disponible
-- **Solución:** Implementar timeout y fallback a otro provider
-
-### Error: "Quota exceeded"
-- **Causa:** Límites de API de IA alcanzados
-- **Solución:** Distribuir carga entre múltiples providers
-
-### Error: "Invalid response from AI"
-- **Causa:** Respuesta mal formateada del LLM
-- **Solución:** Mejorar prompts y validar respuestas
-
-### Error: "Context too large"
-- **Causa:** Conversación muy larga excede límite de tokens
-- **Solución:** Implementar context summarization
+El comando `npm run test:task-08` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
 
 ---
-
-## 📋 CHECKLIST DE COMPLETITUD
-
-Al finalizar esta tarea, deberías tener:
-
-- [ ] ✅ Asistente virtual respondiendo apropiadamente
-- [ ] ✅ Sistema de recomendaciones personalizado
-- [ ] ✅ Análisis de sentimientos en reseñas
-- [ ] ✅ Generación de itinerarios inteligentes
-- [ ] ✅ Múltiples providers de IA configurados
-- [ ] ✅ Cache y optimización implementados
-- [ ] ✅ Monitoreo de costos y performance
-- [ ] ✅ Prompts específicos para Riohacha
-- [ ] ✅ Manejo de contexto conversacional
-- [ ] ✅ Endpoints de IA funcionando completamente
-
-**Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
-
-**Siguiente tarea:** `09-testing-validacion.md`

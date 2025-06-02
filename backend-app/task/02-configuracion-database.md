@@ -260,3 +260,161 @@ Al finalizar esta tarea, deberías tener:
 **Estado:** 🟡 PENDIENTE → ✅ COMPLETADO
 
 **Siguiente tarea:** `03-colecciones-basicas.md`
+
+---
+
+## 🧪 TESTS ESPECÍFICOS DE LA TAREA
+
+### Tests Obligatorios para Completar la Tarea
+Esta tarea solo estará **COMPLETA** cuando **TODOS** los siguientes tests pasen:
+
+#### **📁 Estructura de Tests: `test/tasks/task-02/`**
+
+##### **1. `database-config.test.ts` - Tests de Configuración de DB**
+```typescript
+describe('Task 02 - Database Configuration', () => {
+  test('should have valid SQLite configuration in payload.config.ts', async () => {
+    // Verificar configuración de SQLite
+    // Verificar parámetros optimizados
+    // Validar connection pool settings
+  });
+
+  test('should have proper WAL mode and PRAGMA settings', async () => {
+    // Verificar PRAGMA journal_mode=WAL
+    // Verificar PRAGMA synchronous=NORMAL
+    // Verificar cache_size configuration
+  });
+
+  test('should have migration runner configured', async () => {
+    // Verificar directorio src/migrations/
+    // Verificar migration runner en payload.config.ts
+    // Validar npm run migrate script
+  });
+});
+```
+
+##### **2. `database-connection.test.ts` - Tests de Conexión**
+```typescript
+describe('Database Connection Tests', () => {
+  test('should establish successful database connection', async () => {
+    // Test de conexión a SQLite
+    // Verificar timeout settings
+    // Validar retry mechanism
+  });
+
+  test('should handle connection pool correctly', async () => {
+    // Test de pool de conexiones
+    // Verificar límites de conexiones concurrentes
+    // Validar limpieza de conexiones
+  });
+
+  test('should have health check endpoint responding', async () => {
+    // Test del endpoint /api/health/database
+    // Verificar respuesta JSON válida
+    // Validar métricas de conexión
+  });
+});
+```
+
+##### **3. `database-seeds.test.ts` - Tests de Seeds y Datos Iniciales**
+```typescript
+describe('Database Seeds Tests', () => {
+  test('should have seeds directory and scripts configured', () => {
+    // Verificar directorio src/seeds/
+    // Verificar npm run seed script
+    // Validar estructura de seeds
+  });
+
+  test('should create Riohacha tourism categories correctly', async () => {
+    // Test de seed de categorías
+    // Verificar categorías específicas de Riohacha
+    // Validar estructura y campos requeridos
+  });
+
+  test('should create initial tourist places for Riohacha', async () => {
+    // Test de seed de lugares turísticos
+    // Verificar datos iniciales de Riohacha
+    // Validar relaciones con categorías
+  });
+});
+```
+
+##### **4. `database-backup.test.ts` - Tests de Backup y Recovery**
+```typescript
+describe('Database Backup System Tests', () => {
+  test('should have backup configuration and scripts', () => {
+    // Verificar npm run backup script
+    // Verificar npm run restore script
+    // Validar configuración de directorio de backups
+  });
+
+  test('should create valid backup files', async () => {
+    // Test de creación de backup
+    // Verificar compresión de backups
+    // Validar integridad de archivos backup
+  });
+
+  test('should restore from backup successfully', async () => {
+    // Test de restore desde backup
+    // Verificar integridad de datos restaurados
+    // Validar estructura de tablas post-restore
+  });
+});
+```
+
+##### **5. `database-performance.test.ts` - Tests de Rendimiento**
+```typescript
+describe('Database Performance Tests', () => {
+  test('should have optimized indexes for frequent queries', async () => {
+    // Test de índices automáticos
+    // Verificar índices compuestos
+    // Validar performance de consultas
+  });
+
+  test('should log slow queries correctly', async () => {
+    // Test de logging de queries >500ms
+    // Verificar configuración de monitoreo
+    // Validar formato de logs
+  });
+
+  test('should handle concurrent connections within limits', async () => {
+    // Test de conexiones concurrentes
+    // Verificar límites de DATABASE_MAX_CONNECTIONS
+    // Validar timeout handling
+  });
+});
+```
+
+### **📊 Comandos de Validación**
+
+#### **Ejecutar Tests de la Tarea 02:**
+```bash
+npm run test:task-02
+```
+
+#### **Ejecutar Tests con Coverage:**
+```bash
+npm run test:task-02:coverage
+```
+
+#### **Validación Automática de Completitud:**
+```bash
+node scripts/validate-task.js 02
+```
+
+### **✅ Criterios de Completitud**
+- [ ] 🧪 **TODOS los tests pasan** (100% success rate)
+- [ ] 📊 **Coverage >80%** en archivos de configuración de database
+- [ ] 🔍 **Validación automática exitosa** con `validate-task.js 02`
+- [ ] 📁 **Estructura de archivos verificada** por tests
+- [ ] ⚡ **Performance tests pasan** con métricas aceptables
+- [ ] 💾 **Tests de backup/restore funcionando** correctamente
+
+---
+
+## ⚠️ IMPORTANTE
+**Esta tarea NO estará completa hasta que TODOS los tests pasen exitosamente.**
+
+El comando `npm run test:task-02` debe ejecutarse sin errores y todos los tests deben estar en estado ✅ PASSED.
+
+---

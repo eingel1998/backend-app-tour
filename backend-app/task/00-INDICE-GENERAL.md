@@ -5,8 +5,11 @@ Completar el desarrollo del backend para la aplicación móvil turística de Rio
 
 ## 📊 PROGRESO GENERAL
 - **Total de archivos de tareas:** 10 ✅ COMPLETO
-- **Tareas completadas:** 0 / ~95
+- **Tareas completadas:** 0 / ~115 (actualizado con testing completo)
 - **Progreso:** 0%
+- **Testing integrado:** ✅ Jest + Supertest configurado
+- **Tests específicos por tarea:** ✅ COMPLETADO (Tareas 01-10)
+- **Validación automática:** ✅ Implementada para todas las tareas
 
 ## 📁 ESTRUCTURA DE ARCHIVOS DE TAREAS
 
@@ -39,18 +42,27 @@ Cada archivo de tarea contiene:
 5. **Comandos útiles** - Scripts y comandos para ejecutar
 6. **Notas técnicas** - Consideraciones importantes
 
-### ✅ CRITERIOS DE COMPLETITUD
-- [ ] Todas las tareas marcadas como completadas
-- [ ] Pruebas básicas funcionando
-- [ ] Documentación actualizada
-- [ ] Código revisado y limpio
+### ✅ CRITERIOS DE COMPLETITUD POR TAREA
+- [ ] Todas las subtareas marcadas como completadas
+- [ ] **TODOS LOS TESTS DE LA TAREA DEBEN PASAR** ✅
+- [ ] Funcionalidad validada automáticamente
+- [ ] Cobertura de código de la tarea > 80%
+- [ ] Documentación de la tarea actualizada
 
-### 🔄 PROCESO DE TRABAJO
+### 🧪 SISTEMA DE TESTING POR TAREA
+- **Enfoque:** Cada tarea tiene sus tests específicos
+- **Ubicación:** `test/tasks/task-XX/` (donde XX es el número de tarea)
+- **Criterio:** Tarea completa = Tests pasando ✅
+- **Ejecución:** `npm run test:task-XX`
+- **Validación:** Automática al completar cada tarea
+
+### 🔄 PROCESO DE TRABAJO CON TESTING
 1. **Leer** el archivo de tarea completo
-2. **Ejecutar** las tareas en orden
-3. **Validar** con los criterios de aceptación
-4. **Marcar** como completado
-5. **Continuar** con el siguiente archivo
+2. **Ejecutar** las subtareas en orden
+3. **Ejecutar tests** de la tarea: `npm run test:task-XX`
+4. **Validar** que todos los tests pasen ✅
+5. **Marcar** como completado solo si tests pasan
+6. **Continuar** con el siguiente archivo
 
 ## 🚨 CONVENCIONES
 
@@ -63,8 +75,9 @@ Cada archivo de tarea contiene:
 ### 📋 Estados de Tareas Individuales
 - [ ] **Pendiente**
 - [⏳] **En progreso**
-- [✅] **Completada**
-- [❌] **Falló/Bloqueada**
+- [🧪] **Tests ejecutándose**
+- [✅] **Completada** (todos los tests pasaron)
+- [❌] **Falló** (tests fallaron o bloqueada)
 
 ## 📞 CONTACTO Y SOPORTE
 Si encuentras problemas o necesitas clarificaciones:
@@ -77,17 +90,20 @@ Si encuentras problemas o necesitas clarificaciones:
 ## 📈 RESUMEN COMPLETO DE TAREAS
 
 ### 📋 DISTRIBUCIÓN POR FASE
-1. **Configuración y Setup (Tareas 01-02):** ~15 tareas
-2. **Colecciones Core (Tareas 03-05):** ~35 tareas  
-3. **Funcionalidades Avanzadas (Tareas 06-08):** ~25 tareas
-4. **Testing y Deployment (Tareas 09-10):** ~20 tareas
+1. **Configuración y Setup (Tareas 01-02):** ~15 tareas + tests
+2. **Colecciones Core (Tareas 03-05):** ~35 tareas + tests
+3. **Funcionalidades Avanzadas (Tareas 06-08):** ~25 tareas + tests  
+4. **Testing y Deployment (Tareas 09-10):** ~25 tareas + validación final
 
-**Total estimado:** ~95 tareas individuales
+**Total estimado:** ~100 tareas individuales + 30 test suites específicas = ~115 tareas
 
 ### ⏱️ ESTIMACIÓN DE TIEMPO
-- **Fase 1:** 1-2 días
-- **Fase 2:** 3-4 días  
-- **Fase 3:** 2-3 días
+- **Fase 1:** 1-2 días (incluye setup de testing)
+- **Fase 2:** 3-4 días (incluye desarrollo + tests)
+- **Fase 3:** 2-3 días (incluye desarrollo + tests)
+- **Fase 4:** 1-2 días (validación completa + deployment)
+
+**Total estimado:** 7-11 días de desarrollo completo con testing
 - **Fase 4:** 2-3 días
 
 **Total:** 8-12 días de desarrollo
