@@ -13,6 +13,8 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN npm install --legacy-peer-deps
 RUN npm install --os=linux --libc=musl --cpu=x64 sharp
+RUN npm install --os=linux --libc=musl --cpu=x64 @libsql/linux-x64-musl
+RUN npm cache clean --force
 
 
 # Rebuild the source code only when needed
