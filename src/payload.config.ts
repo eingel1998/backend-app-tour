@@ -26,13 +26,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   }, // Configuración optimizada para producción
-  serverURL:
-    process.env.NEXT_PUBLIC_SERVER_URL ||
-    (process.env.NODE_ENV === 'production'
-      ? (() => {
-          throw new Error('🚨 NEXT_PUBLIC_SERVER_URL es requerida en producción')
-        })()
-      : 'http://localhost:3000'),
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   cors:
     process.env.CORS_ORIGINS?.split(',') ||
     (process.env.NODE_ENV === 'production'
