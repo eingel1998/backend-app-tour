@@ -129,6 +129,102 @@ curl -X POST http://localhost:3000/api/media \
 - `/api/auth/login`, `/api/auth/register`, `/api/search/places`, `/api/ai/chat`, etc.
 - Consulta el archivo `DISEÑO_BACKEND_UNIFICADO.txt` para la lista completa de endpoints planeados.
 
+## Esquema de la Base de Datos
+
+```mermaid
+erDiagram
+    USERS {
+        string id
+        string email
+        string password
+        string firstName
+        string lastName
+        string phone
+        date dateOfBirth
+        string profileImage (rel: MEDIA)
+        boolean isActive
+        date lastLogin
+        number loginAttempts
+        boolean isBlocked
+        enum userType (user|business|admin)
+        group travelPreferences
+        group contactPreferences
+        group businessData (solo business)
+        array favoritesList (rel: PLACES)
+    }
+    
+    MEDIA {
+        string id
+        string title
+        string alt
+        string caption
+        string description
+        group contentInfo
+        array tags
+        enum category
+        boolean isPublic
+        boolean isApproved
+        group usageStats
+        string uploadedBy (rel: USERS)
+    }
+
+    CATEGORIES {
+        string id
+        string name
+        string slug
+        string description
+        string icon
+        string color
+        string image (rel: MEDIA)
+        string parentCategory (rel: CATEGORIES)
+        boolean isActive
+        number sortOrder
+        string seoTitle
+        string seoDescription
+    }
+
+    PLACES {
+        string id
+        string name
+        string slug
+        string description
+        string shortDescription
+        string category (rel: CATEGORIES)
+        string subcategory
+        array tags
+        group location
+        array images (rel: MEDIA)
+        array videos (rel: MEDIA)
+        string virtualTour
+        group pricing
+        array schedule
+        group accessibility
+        array features
+        group statistics
+        string businessOwner (rel: USERS)
+        array relatedPlaces (rel: PLACES)
+        enum status
+        boolean isActive
+        boolean isFeatured
+        boolean isVerified
+        date verificationDate
+    }
+
+    USERS ||--o{ MEDIA : profileImage
+    USERS ||--o{ CATEGORIES : favoriteCategories
+    USERS ||--o{ PLACES : favoritesList
+    MEDIA }o--|| USERS : uploadedBy
+    CATEGORIES ||--o| MEDIA : image
+    CATEGORIES ||--o| CATEGORIES : parentCategory
+    PLACES ||--o| CATEGORIES : category
+    PLACES ||--o{ MEDIA : images
+    PLACES ||--o{ MEDIA : videos
+    PLACES ||--o| USERS : businessOwner
+    PLACES ||--o{ PLACES : relatedPlaces
+```
+
+> Este diagrama muestra las colecciones principales y sus relaciones. Para detalles completos, consulta el archivo `DISEÑO_BACKEND_UNIFICADO.txt`.
+
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
