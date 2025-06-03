@@ -12,6 +12,10 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "migrate": "payload migrate",
+    "seed": "payload seed",
+    "backup": "node ./scripts/backup.js",
+    "restore": "node ./scripts/restore.js",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "build:render": "pnpm install && cross-env NODE_OPTIONS=--no-deprecation next build",
     "start:render": "cross-env NODE_OPTIONS=--no-deprecation next start",
@@ -21,6 +25,8 @@
     "test:coverage": "jest --coverage",
     "test:verbose": "jest --verbose",
     "test:task-01": "jest --testPathPattern=test/tasks/task-01",
+    "test:task-02": "jest --testPathPattern=test/tasks/task-02/",
+    "test:task-02:coverage": "jest --testPathPattern=test/tasks/task-02/ --coverage",
     "test:validate": "npm run test && npm run lint && npx tsc --noEmit"
   },
   "dependencies": {
