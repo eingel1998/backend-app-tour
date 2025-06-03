@@ -62,6 +62,73 @@ Alternatively, you can use [Docker](https://www.docker.com) to spin up this temp
 
 That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
 
+## Endpoints REST principales
+
+La API RESTful de Payload expone automáticamente los endpoints para cada colección. Los principales endpoints disponibles en este proyecto son:
+
+### Usuarios (`users`)
+- `GET    /api/users` — Listar usuarios
+- `POST   /api/users` — Crear usuario
+- `GET    /api/users/:id` — Obtener usuario por ID
+- `PATCH  /api/users/:id` — Actualizar usuario
+- `DELETE /api/users/:id` — Eliminar usuario
+
+### Media (`media`)
+- `GET    /api/media` — Listar archivos multimedia
+- `POST   /api/media` — Subir archivo
+- `GET    /api/media/:id` — Obtener archivo por ID
+- `PATCH  /api/media/:id` — Actualizar archivo
+- `DELETE /api/media/:id` — Eliminar archivo
+
+### Categorías (`categories`)
+- `GET    /api/categories` — Listar categorías
+- `POST   /api/categories` — Crear categoría
+- `GET    /api/categories/:id` — Obtener categoría por ID
+- `PATCH  /api/categories/:id` — Actualizar categoría
+- `DELETE /api/categories/:id` — Eliminar categoría
+
+### Lugares (`places`)
+- `GET    /api/places` — Listar lugares turísticos
+- `POST   /api/places` — Crear lugar
+- `GET    /api/places/:id` — Obtener lugar por ID
+- `PATCH  /api/places/:id` — Actualizar lugar
+- `DELETE /api/places/:id` — Eliminar lugar
+
+> Todos los endpoints aceptan filtros y paginación según la [documentación oficial de Payload](https://payloadcms.com/docs/rest-api/overview).
+
+#### Ejemplo de uso con curl
+
+```bash
+# Crear usuario
+curl -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "123456", "firstName": "Test", "lastName": "User"}'
+
+# Listar lugares filtrando por categoría
+curl "http://localhost:3000/api/places?where[category][equals]=<category_id>"
+
+# Subir imagen (media)
+curl -X POST http://localhost:3000/api/media \
+  -F "file=@./ruta/imagen.jpg" \
+  -F "title=Foto de prueba"
+```
+
+#### Autenticación
+- El login se realiza vía `/api/users/login` (Payload Auth).
+- Para endpoints protegidos, usa el token JWT recibido en el login:
+  ```bash
+  curl -H "Authorization: JWT <token>" http://localhost:3000/api/users/me
+  ```
+
+#### Filtros y paginación
+- Puedes filtrar por cualquier campo usando la sintaxis `where[campo][operador]=valor`.
+- Ejemplo: `?where[userType][equals]=business`
+- Soporta paginación: `?limit=10&page=2`
+
+#### Endpoints personalizados (futuros)
+- `/api/auth/login`, `/api/auth/register`, `/api/search/places`, `/api/ai/chat`, etc.
+- Consulta el archivo `DISEÑO_BACKEND_UNIFICADO.txt` para la lista completa de endpoints planeados.
+
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
