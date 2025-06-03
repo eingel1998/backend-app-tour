@@ -1,0 +1,8 @@
+# This file is intentionally left blank.
+# It's used to ensure the 'test/helpers' directory is tracked by Git,
+# as Git doesn't track empty directories.
+# You can add your test helper files in this directory.
+# For example:
+# - apiRequestHelpers.ts
+# - mockDataGenerators.ts
+# - databaseSetupHelpers.ts

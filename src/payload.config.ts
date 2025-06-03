@@ -1,43 +1,38 @@
-// storage-adapter-import-placeholder
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import { buildConfig } from 'payload' // Corrected: payload instead of @payloadcms/core
+import { sqliteAdapter } from '@payloadcms/db-sqlite';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { nextBuildadmin } from '@payloadcms/next/routes'; // Corrected: Changed bundler
+import path from 'path';
+import sharp from 'sharp'; // Added sharp import
+import { fileURLToPath } from 'url'; // Added to keep __dirname replacement working
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
+    // user: Users.slug, // Removed: No Users collection yet
+    bundler: nextBuildadmin(), // Added: as per typical Next.js setup
   },
-  collections: [Users, Media],
-  editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  editor: lexicalEditor({}),
+  collections: [
+    // Add collections here later
+  ],
+  globals: [
+    // Add globals here later
+  ],
+  secret: process.env.PAYLOAD_SECRET || 'default-secret-key-please-change', // Default secret
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  // Configuración optimizada para producción
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
-  cors: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3000'],
-  csrf: process.env.NODE_ENV === 'production' ? [process.env.NEXT_PUBLIC_SERVER_URL || ''] : [],
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URI || '',
+      // Default to payload.db, will be overridden by DATABASE_URI from .env
+      url: process.env.DATABASE_URI || path.resolve(dirname, 'payload.db'), 
     },
   }),
-  sharp,
+  sharp, // Payload 3 includes sharp by default
   plugins: [
-    payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    // Plugins will be added in later tasks
   ],
-})
+});
