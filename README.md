@@ -94,6 +94,43 @@ La API RESTful de Payload expone automáticamente los endpoints para cada colecc
 - `PATCH  /api/places/:id` — Actualizar lugar
 - `DELETE /api/places/:id` — Eliminar lugar
 
+### Reseñas (`reviews`)
+- `GET    /api/reviews` — Listar reseñas
+- `POST   /api/reviews` — Crear reseña
+- `GET    /api/reviews/:id` — Obtener reseña por ID
+- `PATCH  /api/reviews/:id` — Actualizar reseña
+- `DELETE /api/reviews/:id` — Eliminar reseña
+
+### Conversaciones (`conversations`)
+- `GET    /api/conversations` — Listar conversaciones
+- `POST   /api/conversations` — Crear conversación
+- `GET    /api/conversations/:id` — Obtener conversación por ID
+- `PATCH  /api/conversations/:id` — Actualizar conversación
+- `DELETE /api/conversations/:id` — Eliminar conversación
+
+### Recomendaciones (`recommendations`)
+- `GET    /api/recommendations` — Listar recomendaciones
+- `POST   /api/recommendations` — Crear recomendación
+- `GET    /api/recommendations/:id` — Obtener recomendación por ID
+- `PATCH  /api/recommendations/:id` — Actualizar recomendación
+- `DELETE /api/recommendations/:id` — Eliminar recomendación
+
+### Eventos (`events`)
+- `GET    /api/events` — Listar eventos
+- `POST   /api/events` — Crear evento
+- `GET    /api/events/:id` — Obtener evento por ID
+- `PATCH  /api/events/:id` — Actualizar evento
+- `DELETE /api/events/:id` — Eliminar evento
+
+### Mensajes de Conversación y Contexto IA
+- `GET    /api/conversations/:id/messages` — Listar mensajes de la conversación
+- `POST   /api/conversations/:id/messages` — Agregar mensaje a la conversación
+- `GET    /api/conversations/:id/context` — Obtener contexto de IA
+- `PATCH  /api/conversations/:id/context` — Actualizar contexto de IA
+
+### Chat IA
+- `POST   /api/ai/chat` — Enviar mensaje al modelo de IA y recibir respuesta contextual
+
 > Todos los endpoints aceptan filtros y paginación según la [documentación oficial de Payload](https://payloadcms.com/docs/rest-api/overview).
 
 #### Ejemplo de uso con curl

@@ -71,6 +71,10 @@ export interface Config {
     media: Media;
     categories: Category;
     places: Place;
+    reviews: Review;
+    conversations: Conversation;
+    recommendations: Recommendation;
+    events: Event;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +85,10 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     places: PlacesSelect<false> | PlacesSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    conversations: ConversationsSelect<false> | ConversationsSelect<true>;
+    recommendations: RecommendationsSelect<false> | RecommendationsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -324,6 +332,373 @@ export interface Place {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  user: number | User;
+  place: number | Place;
+  rating: number;
+  title?: string | null;
+  comment: string;
+  pros?: string | null;
+  cons?: string | null;
+  /**
+   * Máx 5 imágenes
+   */
+  images?: (number | Media)[] | null;
+  visitDate?: string | null;
+  tripType?: ('solo' | 'couple' | 'family' | 'friends' | 'business') | null;
+  ratings?: {
+    cleanliness?: number | null;
+    service?: number | null;
+    value?: number | null;
+    accessibility?: number | null;
+  };
+  status?: ('pending' | 'approved' | 'rejected' | 'flagged') | null;
+  isVerified?: boolean | null;
+  isVisible?: boolean | null;
+  moderationNotes?: string | null;
+  flagReason?: string | null;
+  helpfulVotes?: number | null;
+  notHelpfulVotes?: number | null;
+  reportCount?: number | null;
+  responses?:
+    | {
+        user?: (number | null) | User;
+        response?: string | null;
+        responseDate?: string | null;
+        isOfficial?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations".
+ */
+export interface Conversation {
+  id: number;
+  user: number | User;
+  sessionId?: string | null;
+  title?: string | null;
+  isActive?: boolean | null;
+  language?: ('es' | 'en' | 'wayuu') | null;
+  lastInteraction?: string | null;
+  userContext?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  assistantSettings?: {
+    personality?: ('friendly' | 'professional' | 'casual') | null;
+    responseLength?: ('short' | 'medium' | 'detailed') | null;
+    includeRecommendations?: boolean | null;
+    autoTranslate?: boolean | null;
+  };
+  messages?:
+    | {
+        id: string | null;
+        sender: 'user' | 'assistant';
+        message: string;
+        messageType?: ('text' | 'recommendation' | 'itinerary' | 'question' | 'greeting') | null;
+        processingData?: {
+          aiModel?: string | null;
+          processingTime?: number | null;
+          confidence?: number | null;
+          tokens?: number | null;
+        };
+        metadata?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        isRead?: boolean | null;
+        isEdited?: boolean | null;
+        editedAt?: string | null;
+        timestamp?: string | null;
+      }[]
+    | null;
+  statistics?: {
+    totalMessages?: number | null;
+    avgResponseTime?: number | null;
+    satisfactionRating?: number | null;
+    lastRating?: string | null;
+  };
+  isArchived?: boolean | null;
+  archivedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recommendations".
+ */
+export interface Recommendation {
+  id: number;
+  user: number | User;
+  recommendationType: 'place' | 'itinerary' | 'experience' | 'route';
+  title?: string | null;
+  description?: string | null;
+  source?: {
+    generatedBy?: ('ai' | 'admin' | 'user' | 'business') | null;
+    sourceConversation?: (number | null) | Conversation;
+    prompt?: string | null;
+    algorithm?: string | null;
+  };
+  context?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  placeRecommendation?: {
+    places?: (number | Place)[] | null;
+    reason?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    score?: number | null;
+    tags?:
+      | {
+          tag?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    visitOrder?:
+      | {
+          place?: (number | null) | Place;
+          orderIndex?: number | null;
+          estimatedTime?: number | null;
+          notes?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  itineraryRecommendation?: {
+    name?: string | null;
+    duration?: number | null;
+    difficulty?: ('easy' | 'moderate' | 'hard') | null;
+    theme?: ('cultural' | 'adventure' | 'relaxation' | 'gastronomic' | 'natural' | 'mixed') | null;
+    dailySchedule?:
+      | {
+          day?: number | null;
+          date?: string | null;
+          activities?:
+            | {
+                time?: string | null;
+                place?: (number | null) | Place;
+                activity?: string | null;
+                duration?: number | null;
+                cost?: number | null;
+                notes?: string | null;
+                transportation?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    estimatedCosts?: {
+      accommodation?: number | null;
+      food?: number | null;
+      transportation?: number | null;
+      activities?: number | null;
+      total?: number | null;
+      currency?: ('COP' | 'USD') | null;
+    };
+    includedServices?:
+      | {
+          service?: string | null;
+          isIncluded?: boolean | null;
+          additionalCost?: number | null;
+          id?: string | null;
+        }[]
+      | null;
+    recommendations?: {
+      bestTimeToVisit?: string | null;
+      packingList?:
+        | {
+            item?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+      tips?:
+        | {
+            tip?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+      warnings?:
+        | {
+            warning?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  experienceRecommendation?: {
+    experienceType?: ('adventure' | 'cultural' | 'gastronomic' | 'wellness' | 'educational') | null;
+    provider?: (number | null) | User;
+    places?: (number | Place)[] | null;
+    activities?:
+      | {
+          activity?: string | null;
+          duration?: string | null;
+          difficulty?: ('easy' | 'moderate' | 'hard') | null;
+          id?: string | null;
+        }[]
+      | null;
+    price?: {
+      amount?: number | null;
+      currency?: ('COP' | 'USD') | null;
+      includes?:
+        | {
+            item?: string | null;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  status?: ('draft' | 'active' | 'expired' | 'archived') | null;
+  isPublic?: boolean | null;
+  isBookable?: boolean | null;
+  expiresAt?: string | null;
+  engagement?: {
+    wasViewed?: boolean | null;
+    wasAccepted?: boolean | null;
+    wasBooked?: boolean | null;
+    wasShared?: boolean | null;
+    viewedAt?: string | null;
+    acceptedAt?: string | null;
+    sharedCount?: number | null;
+  };
+  feedback?: {
+    rating?: number | null;
+    comment?: string | null;
+    ratedAt?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  name: string;
+  slug?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  shortDescription?: string | null;
+  eventType?:
+    | ('festival' | 'concert' | 'exhibition' | 'sport' | 'cultural' | 'religious' | 'business' | 'educational')
+    | null;
+  category?: (number | null) | Category;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  schedule: {
+    startDate: string;
+    endDate?: string | null;
+    startTime?: string | null;
+    endTime?: string | null;
+    timezone?: string | null;
+    duration?: string | null;
+    isRecurring?: boolean | null;
+    recurrencePattern?: string | null;
+  };
+  location?: {
+    locationType?: ('place' | 'custom' | 'multiple' | 'online') | null;
+    place?: (number | null) | Place;
+    customLocation?: {
+      name?: string | null;
+      address?: string | null;
+      latitude?: number | null;
+      longitude?: number | null;
+      city?: string | null;
+    };
+    onlineDetails?: {
+      platform?: string | null;
+      url?: string | null;
+      accessCode?: string | null;
+    };
+  };
+  organizer?: {
+    organizerType?: ('business' | 'government' | 'ngo' | 'individual') | null;
+    organizer?: (number | null) | User;
+    organizerName?: string | null;
+    contact?: {
+      email?: string | null;
+      phone?: string | null;
+      website?: string | null;
+    };
+  };
+  pricing?: {
+    isFree?: boolean | null;
+    ticketPrice?: number | null;
+    currency?: ('COP' | 'USD') | null;
+    hasDiscounts?: boolean | null;
+    discountDescription?: string | null;
+    requiresReservation?: boolean | null;
+    maxAttendees?: number | null;
+    currentAttendees?: number | null;
+  };
+  images?: (number | Media)[] | null;
+  videos?: (number | Media)[] | null;
+  poster?: (number | null) | Media;
+  status?: ('draft' | 'published' | 'cancelled' | 'postponed' | 'completed') | null;
+  isActive?: boolean | null;
+  isFeatured?: boolean | null;
+  isRecurring?: boolean | null;
+  cancellationReason?: string | null;
+  isApproved?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -344,6 +719,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'places';
         value: number | Place;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'conversations';
+        value: number | Conversation;
+      } | null)
+    | ({
+        relationTo: 'recommendations';
+        value: number | Recommendation;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -574,6 +965,352 @@ export interface PlacesSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  user?: T;
+  place?: T;
+  rating?: T;
+  title?: T;
+  comment?: T;
+  pros?: T;
+  cons?: T;
+  images?: T;
+  visitDate?: T;
+  tripType?: T;
+  ratings?:
+    | T
+    | {
+        cleanliness?: T;
+        service?: T;
+        value?: T;
+        accessibility?: T;
+      };
+  status?: T;
+  isVerified?: T;
+  isVisible?: T;
+  moderationNotes?: T;
+  flagReason?: T;
+  helpfulVotes?: T;
+  notHelpfulVotes?: T;
+  reportCount?: T;
+  responses?:
+    | T
+    | {
+        user?: T;
+        response?: T;
+        responseDate?: T;
+        isOfficial?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "conversations_select".
+ */
+export interface ConversationsSelect<T extends boolean = true> {
+  user?: T;
+  sessionId?: T;
+  title?: T;
+  isActive?: T;
+  language?: T;
+  lastInteraction?: T;
+  userContext?: T;
+  assistantSettings?:
+    | T
+    | {
+        personality?: T;
+        responseLength?: T;
+        includeRecommendations?: T;
+        autoTranslate?: T;
+      };
+  messages?:
+    | T
+    | {
+        id?: T;
+        sender?: T;
+        message?: T;
+        messageType?: T;
+        processingData?:
+          | T
+          | {
+              aiModel?: T;
+              processingTime?: T;
+              confidence?: T;
+              tokens?: T;
+            };
+        metadata?: T;
+        isRead?: T;
+        isEdited?: T;
+        editedAt?: T;
+        timestamp?: T;
+      };
+  statistics?:
+    | T
+    | {
+        totalMessages?: T;
+        avgResponseTime?: T;
+        satisfactionRating?: T;
+        lastRating?: T;
+      };
+  isArchived?: T;
+  archivedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recommendations_select".
+ */
+export interface RecommendationsSelect<T extends boolean = true> {
+  user?: T;
+  recommendationType?: T;
+  title?: T;
+  description?: T;
+  source?:
+    | T
+    | {
+        generatedBy?: T;
+        sourceConversation?: T;
+        prompt?: T;
+        algorithm?: T;
+      };
+  context?: T;
+  placeRecommendation?:
+    | T
+    | {
+        places?: T;
+        reason?: T;
+        score?: T;
+        tags?:
+          | T
+          | {
+              tag?: T;
+              id?: T;
+            };
+        visitOrder?:
+          | T
+          | {
+              place?: T;
+              orderIndex?: T;
+              estimatedTime?: T;
+              notes?: T;
+              id?: T;
+            };
+      };
+  itineraryRecommendation?:
+    | T
+    | {
+        name?: T;
+        duration?: T;
+        difficulty?: T;
+        theme?: T;
+        dailySchedule?:
+          | T
+          | {
+              day?: T;
+              date?: T;
+              activities?:
+                | T
+                | {
+                    time?: T;
+                    place?: T;
+                    activity?: T;
+                    duration?: T;
+                    cost?: T;
+                    notes?: T;
+                    transportation?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        estimatedCosts?:
+          | T
+          | {
+              accommodation?: T;
+              food?: T;
+              transportation?: T;
+              activities?: T;
+              total?: T;
+              currency?: T;
+            };
+        includedServices?:
+          | T
+          | {
+              service?: T;
+              isIncluded?: T;
+              additionalCost?: T;
+              id?: T;
+            };
+        recommendations?:
+          | T
+          | {
+              bestTimeToVisit?: T;
+              packingList?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              tips?:
+                | T
+                | {
+                    tip?: T;
+                    id?: T;
+                  };
+              warnings?:
+                | T
+                | {
+                    warning?: T;
+                    id?: T;
+                  };
+            };
+      };
+  experienceRecommendation?:
+    | T
+    | {
+        experienceType?: T;
+        provider?: T;
+        places?: T;
+        activities?:
+          | T
+          | {
+              activity?: T;
+              duration?: T;
+              difficulty?: T;
+              id?: T;
+            };
+        price?:
+          | T
+          | {
+              amount?: T;
+              currency?: T;
+              includes?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+            };
+      };
+  status?: T;
+  isPublic?: T;
+  isBookable?: T;
+  expiresAt?: T;
+  engagement?:
+    | T
+    | {
+        wasViewed?: T;
+        wasAccepted?: T;
+        wasBooked?: T;
+        wasShared?: T;
+        viewedAt?: T;
+        acceptedAt?: T;
+        sharedCount?: T;
+      };
+  feedback?:
+    | T
+    | {
+        rating?: T;
+        comment?: T;
+        ratedAt?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  shortDescription?: T;
+  eventType?: T;
+  category?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  schedule?:
+    | T
+    | {
+        startDate?: T;
+        endDate?: T;
+        startTime?: T;
+        endTime?: T;
+        timezone?: T;
+        duration?: T;
+        isRecurring?: T;
+        recurrencePattern?: T;
+      };
+  location?:
+    | T
+    | {
+        locationType?: T;
+        place?: T;
+        customLocation?:
+          | T
+          | {
+              name?: T;
+              address?: T;
+              latitude?: T;
+              longitude?: T;
+              city?: T;
+            };
+        onlineDetails?:
+          | T
+          | {
+              platform?: T;
+              url?: T;
+              accessCode?: T;
+            };
+      };
+  organizer?:
+    | T
+    | {
+        organizerType?: T;
+        organizer?: T;
+        organizerName?: T;
+        contact?:
+          | T
+          | {
+              email?: T;
+              phone?: T;
+              website?: T;
+            };
+      };
+  pricing?:
+    | T
+    | {
+        isFree?: T;
+        ticketPrice?: T;
+        currency?: T;
+        hasDiscounts?: T;
+        discountDescription?: T;
+        requiresReservation?: T;
+        maxAttendees?: T;
+        currentAttendees?: T;
+      };
+  images?: T;
+  videos?: T;
+  poster?: T;
+  status?: T;
+  isActive?: T;
+  isFeatured?: T;
+  isRecurring?: T;
+  cancellationReason?: T;
+  isApproved?: T;
   updatedAt?: T;
   createdAt?: T;
 }
