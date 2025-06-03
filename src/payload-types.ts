@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    categories: Category;
+    places: Place;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +79,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    places: PlacesSelect<false> | PlacesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -119,6 +123,68 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  firstName?: string | null;
+  lastName?: string | null;
+  phone?: string | null;
+  dateOfBirth?: string | null;
+  profileImage?: (number | null) | Media;
+  isActive?: boolean | null;
+  lastLogin?: string | null;
+  isBlocked?: boolean | null;
+  userType: 'user' | 'business' | 'admin';
+  travelPreferences?: {
+    budgetRange?: ('low' | 'medium' | 'high') | null;
+    travelType?: ('adventure' | 'cultural' | 'relaxation' | 'business' | 'family') | null;
+    accommodationType?: ('hotel' | 'hostel' | 'apartment' | 'resort' | 'camping') | null;
+    transportation?: ('car' | 'public' | 'walking' | 'bike' | 'motorcycle') | null;
+    interests?:
+      | {
+          interest?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    favoriteCategories?: (number | Category)[] | null;
+  };
+  contactPreferences?: {
+    emailNotifications?: boolean | null;
+    smsNotifications?: boolean | null;
+    pushNotifications?: boolean | null;
+    marketingEmails?: boolean | null;
+  };
+  businessData?: {
+    businessName: string;
+    businessType?: ('hotel' | 'restaurant' | 'tour_operator' | 'transport' | 'attraction' | 'guide' | 'shop') | null;
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    shortDescription?: string | null;
+    address?: string | null;
+    city?: string | null;
+    department?: string | null;
+    website?: string | null;
+    rut?: string | null;
+    taxId?: string | null;
+  };
+  favoritesList?:
+    | {
+        place?: (number | null) | Place;
+        addedAt?: string | null;
+        notes?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -136,7 +202,33 @@ export interface User {
  */
 export interface Media {
   id: number;
+  title?: string | null;
   alt: string;
+  caption?: string | null;
+  description?: string | null;
+  contentInfo?: {
+    photographer?: string | null;
+    location?: string | null;
+    takenAt?: string | null;
+    camera?: string | null;
+    license?: string | null;
+  };
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  category?: ('place' | 'event' | 'business' | 'user' | 'promotion' | 'document') | null;
+  isPublic?: boolean | null;
+  isApproved?: boolean | null;
+  usageStats?: {
+    usedInPlaces?: number | null;
+    usedInEvents?: number | null;
+    usedInBusinesses?: number | null;
+    totalViews?: number | null;
+  };
+  uploadedBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -148,6 +240,87 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  slug?: string | null;
+  description?: string | null;
+  icon?: string | null;
+  color?: string | null;
+  image?: (number | null) | Media;
+  parentCategory?: (number | null) | Category;
+  isActive?: boolean | null;
+  sortOrder?: number | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "places".
+ */
+export interface Place {
+  id: number;
+  name: string;
+  slug?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  shortDescription?: string | null;
+  category: number | Category;
+  subcategory?: string | null;
+  tags?:
+    | {
+        tag?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -163,6 +336,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'places';
+        value: number | Place;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -211,6 +392,60 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  phone?: T;
+  dateOfBirth?: T;
+  profileImage?: T;
+  isActive?: T;
+  lastLogin?: T;
+  isBlocked?: T;
+  userType?: T;
+  travelPreferences?:
+    | T
+    | {
+        budgetRange?: T;
+        travelType?: T;
+        accommodationType?: T;
+        transportation?: T;
+        interests?:
+          | T
+          | {
+              interest?: T;
+              id?: T;
+            };
+        favoriteCategories?: T;
+      };
+  contactPreferences?:
+    | T
+    | {
+        emailNotifications?: T;
+        smsNotifications?: T;
+        pushNotifications?: T;
+        marketingEmails?: T;
+      };
+  businessData?:
+    | T
+    | {
+        businessName?: T;
+        businessType?: T;
+        description?: T;
+        shortDescription?: T;
+        address?: T;
+        city?: T;
+        department?: T;
+        website?: T;
+        rut?: T;
+        taxId?: T;
+      };
+  favoritesList?:
+    | T
+    | {
+        place?: T;
+        addedAt?: T;
+        notes?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -226,7 +461,37 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  title?: T;
   alt?: T;
+  caption?: T;
+  description?: T;
+  contentInfo?:
+    | T
+    | {
+        photographer?: T;
+        location?: T;
+        takenAt?: T;
+        camera?: T;
+        license?: T;
+      };
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  category?: T;
+  isPublic?: T;
+  isApproved?: T;
+  usageStats?:
+    | T
+    | {
+        usedInPlaces?: T;
+        usedInEvents?: T;
+        usedInBusinesses?: T;
+        totalViews?: T;
+      };
+  uploadedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -238,6 +503,79 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        medium?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        large?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  icon?: T;
+  color?: T;
+  image?: T;
+  parentCategory?: T;
+  isActive?: T;
+  sortOrder?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "places_select".
+ */
+export interface PlacesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  shortDescription?: T;
+  category?: T;
+  subcategory?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
