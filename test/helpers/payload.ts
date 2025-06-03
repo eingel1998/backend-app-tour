@@ -40,6 +40,7 @@ export async function createTestUser(data: Record<string, unknown> = {}) {
   const defaultUser = {
     email: 'test@example.com',
     password: 'test123456',
+    userType: 'user' as const, // string literal para cumplir con el tipo
     ...data,
   }
 
